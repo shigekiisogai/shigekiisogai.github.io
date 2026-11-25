@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Home",
+    "route": "/",
+    "id": "home"
+  },
+  {
+    "title": "Research",
+    "route": "/research/",
+    "id": "research"
+  },
+  {
+    "title": "磯貝 茂樹",
+    "route": "/ja/",
+    "id": "japanese"
+  }
+]

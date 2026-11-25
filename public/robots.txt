@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://shigekiisogai.github.io/sitemap.xml
