@@ -12,7 +12,7 @@ for(const file of files){
  const materialFile=((file.startsWith('public/materials/interactive/')||file.startsWith('src/materials/applied/'))&&file.endsWith('.html'))
   ||(file.startsWith('public/teaching/applied-micro/assets/')&&file.endsWith('.js'))
   ||((file.startsWith('tests/interactive/')||file.startsWith('tests/applied/'))&&file.endsWith('.cjs'));
- if(!allowedRoot.has(file)&&!allowedExt.has(path.extname(file))&&!materialFile&&!['public/.nojekyll','public/_headers'].includes(file))errors.push(`${file}: unsupported file type`);
+ if(!allowedRoot.has(file)&&!allowedExt.has(path.extname(file))&&!materialFile&&!['public/.nojekyll','public/_headers','public/googlebdedddafccc19732.html'].includes(file))errors.push(`${file}: unsupported file type`);
  if(fs.lstatSync(file).isSymbolicLink()){errors.push(`${file}: symlink`);continue;}
  const s=fs.readFileSync(file,'utf8');
  const patterns=[/gh[pousr]_[A-Za-z0-9]{25,}/,/github_pat_[A-Za-z0-9_]{30,}/,/sk-[A-Za-z0-9_-]{24,}/,/AKIA[A-Z0-9]{16}/,/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/,/Bearer\s+[A-Za-z0-9._-]{24,}/,/\/Users\/[A-Za-z0-9_-]+\//,/C:\\Users\\/];

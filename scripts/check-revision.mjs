@@ -23,12 +23,13 @@ for(const course of revision.excludedCourses){
 for(const dir of ['dist-github','dist-cloudflare']){
  const materialHtml=fs.readFileSync(dir+'/course-materials/index.html','utf8');
  const materials=links(materialHtml), materialPage=load(materialHtml);
+ assert.deepEqual(materialPage('h2').toArray().map(h=>materialPage(h).text()),['ミクロ経済学(学部中級レベル）','Microeconomics (Intermediate Level)','上級ミクロ経済学（準備中）','Advanced Microeconomics']);
  for(const course of revision.excludedCourses){
   const title=records.find(r=>r.course===course).courseTitle;
-  assert.equal(materialPage('h2').toArray().some(h=>materialPage(h).text()===title),course!==legacyCourse,course+': approved course title heading');
+  assert(!materialPage('body').text().replace(/\s+/gu,' ').includes(title.replace(/\s+/gu,' ')),course+': retired title absent');
  }
+ for(const course of revision.excludedCourses) assert(!materialPage('.course-directory').text().replace(/\s+/gu,' ').includes(records.find(r=>r.course===course).courseTitle.replace(/\s+/gu,' ')),course+': retired title absent from directory');
  assert(!materialHtml.includes('EXAM DATE:')&&!materialHtml.includes('日時：'),'Exam administration remains in source and REPORT');
- for(const r of records.filter(r=>['既存','追加'].includes(r.status)))assert(materials.some(l=>l.name===r.name&&l.url===r.url),r.course+': '+r.name+' exact name/URL coverage');
  for(const link of originalMaterials)assert(materials.some(l=>l.name===link.text&&l.url===link.href.replace('https://sisogai.github.io/teaching/index.html','/materials/interactive/')),'original Course Materials link preserved: '+link.href);
  for(const course of revision.excludedCourses)assert(!fs.existsSync(`${dir}/${course}`),'Excluded course generated: '+course);
  for(const file of walk(dir)){
@@ -50,4 +51,4 @@ for(const dir of ['dist-github','dist-cloudflare']){
  const japanese=load(fs.readFileSync(dir+'/ja/index.html','utf8'));
  assert(!japanese('a').toArray().some(a=>revision.excludedCourses.some(id=>japanese(a).attr('href')?.includes(id))));
 }
-console.log(`PASS: six course pages excluded; two Drive IDs absent from every build artifact; ${records.length} source links reconciled; Teaching list preserved`);
+console.log(`PASS: six course pages excluded; two Drive IDs absent from every build artifact; ${records.length} source links inventoried; retired sections absent; Teaching list preserved`);

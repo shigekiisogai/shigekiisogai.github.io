@@ -9,8 +9,7 @@ for(const [name,hash] of Object.entries(baseline)){
  let original=body;
  if(name===revision.blogRemoval.pageId)original=body+revision.blogRemoval.removedSuffix;
  if(name==='course-materials'){
-  assert.equal(body,revision.originalMaterialsBody+revision.materialsAppendix,'Only approved materials appendix');
-  assert.equal(createHash('sha256').update(body).digest('hex'),revision.materialsBodySha256);
+  assert.equal(body,revision.originalMaterialsBody,'Approved course materials without retired course sections');
   original=revision.originalMaterialsBody;
  }
  if(name==='teaching'){
@@ -19,7 +18,7 @@ for(const [name,hash] of Object.entries(baseline)){
  }
  assert.equal(createHash('sha256').update(original).digest('hex'),hash,name+' original provenance changed');
 }
-console.log('PASS: 14/14 original body hashes verified; approved blog removal, appendix and Teaching guide checked separately; baseline unchanged');
+console.log('PASS: 14/14 original body hashes verified; approved blog removal, trimmed materials and Teaching guide checked separately; baseline unchanged');
 execFileSync(process.execPath,['scripts/check-original.mjs'],{stdio:'inherit'});
 
 execFileSync(process.execPath,['scripts/check-revision.mjs'],{stdio:'inherit'});

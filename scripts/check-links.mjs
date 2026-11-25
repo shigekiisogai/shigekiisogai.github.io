@@ -8,7 +8,7 @@ const base=process.argv[3]??deploymentBase({ ...process.env, DEPLOY_TARGET:dir==
 const origin='https://shigekiisogai.github.io';
 const walk=p=>fs.readdirSync(p,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(p,e.name)):[path.join(p,e.name)]);
 const errors=[],external=new Set(),documents=new Map();let references=0;
-const htmlFiles=walk(dir).filter(f=>f.endsWith('.html'));
+const htmlFiles=walk(dir).filter(f=>f.endsWith('.html') && path.basename(f)!=='googlebdedddafccc19732.html');
 for(const file of htmlFiles)documents.set(file,load(fs.readFileSync(file,'utf8')));
 for(const [file,$] of documents){
  const url=new URL(base+path.relative(dir,file).split(path.sep).join('/'),origin);

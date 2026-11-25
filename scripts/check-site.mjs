@@ -9,7 +9,7 @@ const walk=p=>fs.readdirSync(p,{withFileTypes:true}).flatMap(e=>e.isDirectory()?
 for(const dir of ['dist-github','dist-cloudflare']){
  assert(!fs.existsSync(dir+'/teaching'));assert(!walk(dir).some(p=>p.includes('applied-micro')));
  const canonical=[],graph=new Map();let redirects=0;
- for(const file of walk(dir).filter(f=>f.endsWith('.html'))){
+ for(const file of walk(dir).filter(f=>f.endsWith('.html') && path.basename(f)!=='googlebdedddafccc19732.html')){
   const html=fs.readFileSync(file,'utf8'),$=load(html),isRedirect=$('meta[http-equiv=refresh]').length>0,is404=file.endsWith('/404.html');
   assert($('title').text().includes('磯貝 茂樹 / Shigeki ISOGAI'));
   assert($('meta[name=description]').attr('content')?.length>30);

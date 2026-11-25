@@ -12,10 +12,10 @@ for(const [dir,base] of [['dist-github','/'],['dist-cloudflare','/']]){
   const p=approvedBlogPage(baseline,revision.blogRemoval);
   const path=`${dir}${canonicalRoute(p.route)}index.html`;
   const html=fs.readFileSync(path,'utf8');const $=load(html);
-  const suffix=p.id==='teaching'?'Course Materials / 講義資料':p.id==='course-materials'?load(revision.materialsAppendix.replace(/^## (.*)$/gm,'<h2>$1</h2>')).text():'';
+  const suffix=p.id==='teaching'?'Course Materials / 講義資料':'';
   assert.equal(normalize($('.entry-content').text()),p.text+normalize(suffix),`${dir}: text ${p.id}`);
   const links=$('.entry-content a[href]').toArray().map(el=>({text:$(el).text().trim(),href:$(el).attr('href')}));
-  assert.deepEqual(links,[...p.links,...(p.id==='teaching'?[{text:'Course Materials / 講義資料',href:'/course-materials/'}]:p.id==='course-materials'?(()=>{const a=load(revision.materialsAppendix);return a('a[href]').toArray().map(e=>({text:a(e).text().trim(),href:a(e).attr('href')}));})():[])].map(l=>({...l,href:rewriteLink(l.href,base)})),`${dir}: links ${p.id}`);
+  assert.deepEqual(links,[...p.links,...(p.id==='teaching'?[{text:'Course Materials / 講義資料',href:'/course-materials/'}]:[])].map(l=>({...l,href:rewriteLink(l.href,base)})),`${dir}: links ${p.id}`);
   for(const anchor of p.anchors)assert.ok($('[id]').toArray().some(e=>$(e).attr('id')===anchor),`${p.id}: missing anchor ${anchor}`);
   assert.ok(!($('meta[name="robots"]').attr('content')||'').includes('noindex'));
   assert.equal($('script,iframe,object,embed,form').length,0,'No active third-party content');
