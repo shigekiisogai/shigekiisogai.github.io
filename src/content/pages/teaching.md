@@ -5,7 +5,7 @@ source: "https://shigekiisogai.wordpress.com/teaching/"
 lang: "en"
 ---
 
-<small>Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted.<br>授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています（例外は授業名に注記しています）。</small>
+<small>Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted.<br>授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています。</small>
 
 ## 2026 Fall
 

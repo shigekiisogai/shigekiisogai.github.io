@@ -14,7 +14,7 @@ for(const [name,hash] of Object.entries(baseline)){
  }
  if(name==='teaching'){
   const addition='## 2026 Fall\n\nMicroeconomics (Graduate School)  \nResearch Seminar I  \nThesis Seminar II  \n（甲南大学）現代アメリカ経済\n\n## 2026 Summer\n\n（東京都立大学）経済経営特別講義（Microeconomics）（英語講義）\n\n';
-  const note='<small>Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted.<br>授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています（例外は授業名に注記しています）。</small>\n\n';
+  const note='<small>Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted.<br>授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています。</small>\n\n';
   assert.ok(body.startsWith('\n\n'+note+addition));
   original=body.replace('\n\n'+note+addition,'\n\n');
   const suffix='\n<a href="/course-materials/">Course Materials / 講義資料</a>\n';
