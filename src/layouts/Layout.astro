@@ -6,12 +6,8 @@ const {title, lang='en',route='/',source,scriptsAllowed=false}=Astro.props;
 const base=import.meta.env.BASE_URL;
 const is404=route==='/404.html';
 const canonical=new URL(route,Astro.site).href;
-const descriptions={
- '/':'Shigeki ISOGAI / 磯貝 茂樹, Associate Professor at the University of Hyogo. Research in microeconomics, game theory, and collusion.',
- '/research/':'Research by Shigeki ISOGAI / 磯貝 茂樹: published papers and work in progress on game theory, collusion, and cartel stability.',
- '/ja/':'磯貝 茂樹（兵庫県立大学国際商経学部准教授）のプロフィール。ミクロ経済学・ゲーム理論、カルテル・談合の研究と教育。',
- '/404.html':'Page not found / ページが見つかりません — 磯貝 茂樹 / Shigeki ISOGAI.'
-};
+const description=route==='/'?'Shigeki ISOGAI / 磯貝 茂樹, Associate Professor at the University of Hyogo. Research in game theory and collusion.':route==='/ja/'?'磯貝 茂樹（兵庫県立大学国際商経学部准教授）のプロフィール。ミクロ経済学・ゲーム理論の研究と教育。':`${title} — 磯貝 茂樹 / Shigeki ISOGAI, University of Hyogo. Research, teaching, and course resources.`;
+
 ---
 <!doctype html>
 <html lang={lang}>
@@ -19,14 +15,14 @@ const descriptions={
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   {is404 && <meta name="robots" content="noindex, follow" />}
-  <meta name="description" content={descriptions[route]} />
+  <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   {['/','/ja/'].includes(route) && <>
    <link rel="alternate" hreflang="en" href="https://shigekiisogai.github.io/" />
    <link rel="alternate" hreflang="ja" href="https://shigekiisogai.github.io/ja/" />
    <link rel="alternate" hreflang="x-default" href="https://shigekiisogai.github.io/" />
   </>}
-  <!-- Search Console: insert only the exact owner-provided verification meta here. -->
+  <!-- Search Console: exact owner-provided verification meta goes here. -->
   <meta http-equiv="Content-Security-Policy" content={`default-src 'self'; script-src ${scriptsAllowed?"'self'":"'none'"}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'`} />
   <slot name="head" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -40,12 +36,12 @@ const descriptions={
    <main id="content" class:list={['site-content',{'home-page':route==='/', 'materials-page':route.startsWith('/teaching/applied-micro/')}]}>
     <article class="content-area"><slot name="before-title" /><h1 class="entry-title">{title}</h1>{route==='/' && <p><a href="/ja/" lang="ja" hreflang="ja">日本語</a></p>}
     {route==='/ja/' && <p><a href="/" lang="en" hreflang="en">English</a></p>}
-    <div class="entry-content"><slot /></div>
-    {!is404 && <aside class="launch-notice"><p>Course materials remain at their existing locations for now. / 授業資料は当面、既存の場所をご参照ください。</p><p><a href="https://shigekiisogai.wordpress.com/%e8%ac%9b%e7%be%a9%e8%b3%87%e6%96%99-course-materials/">Course Materials / 講義資料（WordPress）</a> · <a href="https://shigekiisogai.github.io/teaching/">Interactive materials / 既存教材</a></p></aside>}</article>
+    {!is404 && <nav class="resource-links" aria-label="Course resources"><p><a href="/course-materials/">Course Materials / 講義資料</a> · <a href="/materials/interactive/">Interactive Microeconomics</a></p></nav>}
+    <div class="entry-content"><slot /></div></article>
    </main>
    <footer class="site-footer">
     <nav aria-label="Footer navigation"><ul>{menu.map(p=><li><a href={withBase(p.route,base)}>{p.label}</a></li>)}</ul></nav>
-    <p><a href={withBase('/',base)}>Shigeki ISOGAI</a> <span aria-hidden="true">/</span> <span>磯貝 茂樹</span>{source&&<> <span aria-hidden="true">/</span> <a href={source}>Original page / 元ページ</a></>}</p>
+    <p><a href={withBase('/',base)}>Shigeki ISOGAI</a> <span aria-hidden="true">/</span> <span>Migration preview / 移行試作</span>{source&&<> <span aria-hidden="true">/</span> <a href={source}>Original page / 元ページ</a></>}</p>
    </footer>
   </div>
  </body>

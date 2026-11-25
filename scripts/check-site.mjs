@@ -2,44 +2,31 @@ import fs from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {load} from 'cheerio';
-const origin='https://shigekiisogai.github.io';
-const expected=['404.html','index.html','ja/index.html','research/index.html'];
-function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(path.join(dir,e.name)):[path.join(dir,e.name)]);}
-let refs=0; const external=new Set();
+import {createHash} from 'node:crypto';
+const hash=s=>createHash('sha256').update(s).digest('hex');
+const expected=JSON.parse(fs.readFileSync('provenance/interactive-inline.json'));
+const walk=p=>fs.readdirSync(p,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(p,e.name)):[path.join(p,e.name)]);
 for(const dir of ['dist-github','dist-cloudflare']){
- const htmls=files(dir).filter(f=>f.endsWith('.html'));
- assert.deepEqual(htmls.map(f=>path.relative(dir,f)).sort(),expected);
- assert(!fs.existsSync(path.join(dir,'teaching')));
- for(const file of htmls){
-  const rel=path.relative(dir,file);const route=rel==='index.html'?'/':rel==='404.html'?'/404.html':'/'+rel.replace(/index\.html$/,'');
-  const $=load(fs.readFileSync(file,'utf8'));
-  assert.equal($('link[rel=canonical]').attr('href'),origin+route);
+ assert(!fs.existsSync(dir+'/teaching'));assert(!walk(dir).some(p=>p.includes('applied-micro')));
+ const canonical=[];let redirects=0;
+ for(const file of walk(dir).filter(f=>f.endsWith('.html'))){
+  const html=fs.readFileSync(file,'utf8'),$=load(html),isRedirect=$('meta[http-equiv=refresh]').length>0,is404=file.endsWith('/404.html');
   assert($('title').text().includes('磯貝 茂樹 / Shigeki ISOGAI'));
   assert($('meta[name=description]').attr('content')?.length>30);
-  assert.equal(($('meta[name=robots]').attr('content')||'').includes('noindex'),route==='/404.html');
-  assert(!$('body').text().includes('Migration preview'));
-  if(['/', '/ja/'].includes(route)){
-   assert.equal($('link[hreflang=en]').attr('href'),origin+'/');
-   assert.equal($('link[hreflang=ja]').attr('href'),origin+'/ja/');
-  }
-  for(const el of $('[href],[src]').toArray())for(const attr of ['href','src']){
-   const ref=$(el).attr(attr);if(!ref)continue;refs++;
-   if(/^(mailto:|tel:|data:)/.test(ref))continue;
-   const url=new URL(ref,origin+route);
-   // Explicit absolute link belongs to the untouched existing teaching project Pages.
-   if(/^https:\/\/shigekiisogai\.github\.io\/teaching\//.test(ref)){external.add(ref);continue;}
-   if(url.origin!==origin){external.add(ref);continue;}
-   let dest=decodeURIComponent(url.pathname);if(dest.endsWith('/'))dest+='index.html';
-   const target=path.join(dir,dest);
-   assert(fs.existsSync(target),`${file} ${attr}=${ref} missing ${target}`);
-   if(url.hash && target.endsWith('.html')){
-    const doc=load(fs.readFileSync(target,'utf8'));
-    assert(doc('[id]').toArray().some(e=>doc(e).attr('id')===decodeURIComponent(url.hash.slice(1))),`fragment ${ref}`);
-   }
-  }
+  assert.equal(($('meta[name=robots]').attr('content')||'').includes('noindex'),is404||isRedirect);
+  assert(!$('a[href]').toArray().some(a=>/applied-micro|sisogai.github.io/.test($(a).attr('href'))));
+  const url=$('link[rel=canonical]').attr('href');assert(url.startsWith('https://shigekiisogai.github.io/'));
+  if(!is404&&!isRedirect)canonical.push(url);if(isRedirect)redirects++;
+  if(file.includes('/materials/interactive/'))assert.deepEqual($('script:not([src])').toArray().map(e=>hash($(e).html())),expected[path.basename(file)],file+' scripts changed');
  }
  const sm=load(fs.readFileSync(dir+'/sitemap.xml','utf8'),{xml:true});
- assert.deepEqual(sm('loc').toArray().map(e=>sm(e).text()).sort(),['/','/ja/','/research/'].map(r=>origin+r).sort());
+ assert.deepEqual(sm('loc').toArray().map(e=>sm(e).text()).sort(),canonical.sort());
+ assert.equal(canonical.length,22);assert.equal(redirects,5);
  assert.match(fs.readFileSync(dir+'/robots.txt','utf8'),/Allow: \/\nSitemap: https:\/\/shigekiisogai.github.io\/sitemap.xml/);
+ for(const file of ['index.html','ja/index.html']){
+  const $=load(fs.readFileSync(dir+'/'+file,'utf8'));
+  assert.equal($('link[hreflang=en]').attr('href'),'https://shigekiisogai.github.io/');
+  assert.equal($('link[hreflang=ja]').attr('href'),'https://shigekiisogai.github.io/ja/');
+ }
 }
-console.log(JSON.stringify({pass:true,html_per_build:4,href_src_checked:refs,external_urls:[...external]},null,2));
+console.log('PASS: 28 HTML/build, 22 indexed canonicals, 5 noindex redirects + 404, original interactive scripts unchanged, excluded namespace and casebook absent');

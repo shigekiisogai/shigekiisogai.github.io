@@ -1,7 +1,7 @@
 import routes from './routes.json' with {type:'json'};
 import {withBase} from './paths.mjs';
 
-export const navigationItems=['home','research','japanese'].map(id=>{
+export const navigationItems=['home','research','teaching','course-materials','japanese'].map(id=>{
  const page=routes.find(p=>p.id===id);
  return {...page,label:id==='japanese'?'日本語での情報':page.title};
 });

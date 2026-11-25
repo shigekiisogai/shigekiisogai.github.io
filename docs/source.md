@@ -1,5 +1,5 @@
-# 出典と公開範囲
+# 出典・履歴
 
-レイアウト・CSS・workflowの出典: website-migration-preview d11376ce1f506d7bf5db7b8df25ddfd4008cb399（監査で用いた隔離clone）。Home/Research/日本語の本文は教材導線を追加する前の487dcb5から抽出。日本語routeのみ /ja/ に変更。本文・所属・連絡先・論文URLは変更なし。公開履歴にassistant/OAuthのページを持ち込まないため、履歴なしの選択コピーから新規git初期化する。
+既存14ページの本文は website-migration-preview の487dcb5から抽出、routeのみASCII化。UI/CSSとInteractiveは監査の推奨元d11376ce1f506d7bf5db7b8df25ddfd4008cb399から選択コピー。新規git初期化のため元のassistant/OAuthページ・履歴を含めない。事例集は今回対象外。旧 /teaching/ 名前空間にファイルを生成しない。旧教材リンク1件のみ表示時に新教材へ変換し原文ファイルは保存。所属・連絡先・論文URLは不変。
 
-公開対象は3本文＋404。teaching/ はファイルもディレクトリも持たず、既存project Pagesを維持する。本文基準は元複製のまま。新たな本文承認基準のaccept操作はしない。
+3ページ最小版はtag minimal-a-verified。現在の候補は既存14ページ＋Interactive版で、最小版は公開承認の既定ではない。
