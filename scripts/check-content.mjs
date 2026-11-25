@@ -7,6 +7,7 @@ const baseline=JSON.parse(fs.readFileSync('provenance/body-sha256.json'));
 for(const [name,hash] of Object.entries(baseline)){
  const body=fs.readFileSync(`src/content/pages/${name}.md`,'utf8').split('---').slice(2).join('---');
  let original=body;
+ if(name===revision.blogRemoval.pageId)original=body+revision.blogRemoval.removedSuffix;
  if(name==='course-materials'){
   assert.equal(body,revision.originalMaterialsBody+revision.materialsAppendix,'Only approved materials appendix');
   assert.equal(createHash('sha256').update(body).digest('hex'),revision.materialsBodySha256);
@@ -18,7 +19,7 @@ for(const [name,hash] of Object.entries(baseline)){
  }
  assert.equal(createHash('sha256').update(original).digest('hex'),hash,name+' original provenance changed');
 }
-console.log('PASS: 14/14 original body hashes verified; approved appendix and Teaching guide checked separately; baseline unchanged');
+console.log('PASS: 14/14 original body hashes verified; approved blog removal, appendix and Teaching guide checked separately; baseline unchanged');
 execFileSync(process.execPath,['scripts/check-original.mjs'],{stdio:'inherit'});
 
 execFileSync(process.execPath,['scripts/check-revision.mjs'],{stdio:'inherit'});

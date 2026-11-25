@@ -17,5 +17,11 @@
   "materialsBodySha256": "ae582f43911f18481cc0215b67cd189c747013e6299c67f943498d8786bb32c2",
   "materialsNotTransferredCourses": [
     "microeconomics-grad-school"
-  ]
+  ],
+  "blogRemoval": {
+    "approval": "本人2026-11-25明示追加承認: 日本語ページの旧ブログ紹介項目を削除。公開src/publicの同URLも削除。原本provenance保持。",
+    "pageId": "japanese",
+    "url": "https://sisogaiblog.wordpress.com",
+    "removedSuffix": "\n<a href=\"https://sisogaiblog.wordpress.com\">日本語でのブログ</a>：中国での生活やアメリカでの博士課程に関して過去に書いた記事があります．現在は休止中．\n"
+  }
 }

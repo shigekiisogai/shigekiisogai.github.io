@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-25",
+  "baselineCommit": "05ec55fb88966446a7f08f09b80a64645e5a19af",
+  "scope": "local only; no network, gh, push, or WordPress operations",
+  "node": "v24.22.1",
+  "removedBlog": {
+    "url": "https://sisogaiblog.wordpress.com",
+    "equivalentUrl": "https://sisogaiblog.wordpress.com/",
+    "source": "src/content/pages/japanese.md:16 (baseline)",
+    "occurrencesBefore": 1,
+    "occurrencesAfterPublicSourcesAndBuilds": 0
+  },
+  "checks": [
+    {
+      "command": "npm run build:cloudflare",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-build-cloudflare.log"
+    },
+    {
+      "command": "npm run build:github",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-build-github.log"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-test.log"
+    },
+    {
+      "command": "npm run check:links",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-check-links.log"
+    },
+    {
+      "command": "npm run check:content",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-check-content.log"
+    },
+    {
+      "command": "npm run check:publish",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-check-publish.log"
+    },
+    {
+      "command": "node scripts/check-site.mjs",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-check-site.log"
+    },
+    {
+      "command": "node scripts/check-original.mjs",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-check-original.log"
+    },
+    {
+      "command": "node scripts/check-revision.mjs",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-check-revision.log"
+    },
+    {
+      "command": "git diff --cached --check 05ec55fb88966446a7f08f09b80a64645e5a19af",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-diff-check.log"
+    },
+    {
+      "command": "git diff --exit-code 05ec55fb88966446a7f08f09b80a64645e5a19af -- provenance/body-sha256.json provenance/pages.json provenance/interactive-inline.json provenance/materials-reconciliation.json src/content/pages/course-materials.md",
+      "exitCode": 0,
+      "result": "PASS",
+      "log": "local-revision-logs/blog-original-provenance-unchanged.log"
+    }
+  ],
+  "tests": {
+    "total": 46,
+    "passed": 46,
+    "failed": 0
+  },
+  "content": {
+    "originalBaselinePages": 14,
+    "publicContentPages": 8,
+    "buildPageComparisons": 16,
+    "courseMaterialsLinks": 161,
+    "courseMaterialsDriveLinks": 152,
+    "result": "PASS"
+  },
+  "unverified": [
+    "再push・最終実URL検収（親担当）",
+    "WordPressブログの実設定・非公開操作（本人担当）",
+    "公式Privacy settingsページの現在の記載（network禁止）"
+  ],
+  "result": "PASS",
+  "notice": {
+    "mappedOldPages": 13,
+    "coursePagesDirectedToMaterials": 6,
+    "routeValidation": "PASS",
+    "wordpressOperationsPerformed": false,
+    "officialSourceFetched": false
+  }
+}

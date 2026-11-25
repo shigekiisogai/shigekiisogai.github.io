@@ -1,13 +1,15 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {load} from 'cheerio';
+import {approvedBlogPage} from './blog-policy.mjs';
 import {rewriteLink,canonicalRoute} from '../src/lib/paths.mjs';
 const pages=JSON.parse(fs.readFileSync('provenance/pages.json'));
 const revision=JSON.parse(fs.readFileSync('provenance/approved-revision.json'));
 const normalize=s=>s.replace(/\s+/gu,'');
 let checks=0;
 for(const [dir,base] of [['dist-github','/'],['dist-cloudflare','/']]){
- for(const p of pages.filter(p=>!revision.excludedCourses.includes(p.id))){
+ for(const baseline of pages.filter(p=>!revision.excludedCourses.includes(p.id))){
+  const p=approvedBlogPage(baseline,revision.blogRemoval);
   const path=`${dir}${canonicalRoute(p.route)}index.html`;
   const html=fs.readFileSync(path,'utf8');const $=load(html);
   const suffix=p.id==='teaching'?'Course Materials / 講義資料':p.id==='course-materials'?load(revision.materialsAppendix.replace(/^## (.*)$/gm,'<h2>$1</h2>')).text():'';
