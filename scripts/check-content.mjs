@@ -17,6 +17,9 @@ for(const [name,hash] of Object.entries(baseline)){
   const note='<small>Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted.<br>授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています。</small>\n\n';
   assert.ok(body.startsWith('\n\n'+note+addition));
   original=body.replace('\n\n'+note+addition,'\n\n');
+  assert.ok(original.includes('## 2024年以前に担当した授業'));
+  assert.ok(original.includes('(2019-2023)'));
+  original=original.replace('## 2024年以前に担当した授業','## 過去に担当した授業').replace('(2019-2023)','(2019-2023, 2026)');
   const suffix='\n<a href="/course-materials/">Course Materials / 講義資料</a>\n';
   assert.ok(original.endsWith(suffix));original=original.slice(0,-suffix.length);
  }

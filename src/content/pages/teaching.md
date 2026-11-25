@@ -53,9 +53,9 @@ Research Seminar III
 
 Microeconomics I (Undergrad)
 
-## 過去に担当した授業
+## 2024年以前に担当した授業
 
-<strong>Tokyo Metropolitan University / 東京都立大学 (2019-2023, 2026)</strong>  
+<strong>Tokyo Metropolitan University / 東京都立大学 (2019-2023)</strong>  
 Special Lectures on Microeconomics / 経済経営特別講義（Microeconomics） (undergrad)
 
 <strong><span class="uppercase">Southwestern University of Finance and Economics / 西南財経大学(2017-2023)</span></strong>  

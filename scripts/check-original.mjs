@@ -13,7 +13,7 @@ for(const [dir,base] of [['dist-github','/'],['dist-cloudflare','/']]){
   const path=`${dir}${canonicalRoute(p.route)}index.html`;
   const html=fs.readFileSync(path,'utf8');const $=load(html);
   const suffix=p.id==='teaching'?'Course Materials / 講義資料':'';
-  assert.equal(normalize($('.entry-content').text()),(p.id==='teaching'?normalize('Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted. 授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています。 2026 Fall Microeconomics (Graduate School) Research Seminar I Thesis Seminar II （甲南大学）現代アメリカ経済 2026 Summer （東京都立大学）経済経営特別講義（Microeconomics）（英語講義）'):'')+p.text+normalize(suffix),`${dir}: text ${p.id}`);
+  assert.equal(normalize($('.entry-content').text()),(p.id==='teaching'?normalize('Course titles are given in English for courses taught in English and in Japanese for courses taught in Japanese, unless otherwise noted. 授業名は、原則として英語で行う講義は英語で、日本語で行う講義は日本語で表記しています。 2026 Fall Microeconomics (Graduate School) Research Seminar I Thesis Seminar II （甲南大学）現代アメリカ経済 2026 Summer （東京都立大学）経済経営特別講義（Microeconomics）（英語講義）'):'')+(p.id==='teaching'?p.text.replace('過去に担当した授業','2024年以前に担当した授業').replace('(2019-2023,2026)','(2019-2023)'):p.text)+normalize(suffix),`${dir}: text ${p.id}`);
   const links=$('.entry-content a[href]').toArray().map(el=>({text:$(el).text().trim(),href:$(el).attr('href')}));
   assert.deepEqual(links,[...p.links,...(p.id==='teaching'?[{text:'Course Materials / 講義資料',href:'/course-materials/'}]:[])].map(l=>({...l,href:rewriteLink(l.href,base)})),`${dir}: links ${p.id}`);
   for(const anchor of p.anchors)assert.ok($('[id]').toArray().some(e=>$(e).attr('id')===anchor),`${p.id}: missing anchor ${anchor}`);
