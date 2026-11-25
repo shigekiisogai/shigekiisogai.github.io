@@ -2,6 +2,8 @@
 import '../styles/site.css';
 import {siteHeader,navigationItems as menu} from '../lib/navigation.mjs';
 import {withBase} from '../lib/paths.mjs';
+import routes from '../lib/routes.json';
+const resourcePages=routes.filter(p=>!['home','research','teaching','course-materials','japanese'].includes(p.id));
 const {title, lang='en',route='/',source,scriptsAllowed=false}=Astro.props;
 const base=import.meta.env.BASE_URL;
 const is404=route==='/404.html';
@@ -37,6 +39,7 @@ const description=route==='/'?'Shigeki ISOGAI / 磯貝 茂樹, Associate Profess
     <article class="content-area"><slot name="before-title" /><h1 class="entry-title">{title}</h1>{route==='/' && <p><a href="/ja/" lang="ja" hreflang="ja">日本語</a></p>}
     {route==='/ja/' && <p><a href="/" lang="en" hreflang="en">English</a></p>}
     {!is404 && <nav class="resource-links" aria-label="Course resources"><p><a href="/course-materials/">Course Materials / 講義資料</a> · <a href="/materials/interactive/">Interactive Microeconomics</a></p></nav>}
+    {['/courses/','/course-materials/'].includes(route) && <details class="course-directory"><summary>Lecture notes &amp; student information / 各講義資料・学生向け情報</summary><nav aria-label="Lecture notes and student information"><ul>{resourcePages.map(p=><li><a href={p.route}>{p.title}</a></li>)}</ul></nav></details>}
     <div class="entry-content"><slot /></div></article>
    </main>
    <footer class="site-footer">
