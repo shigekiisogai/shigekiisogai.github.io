@@ -1,11 +1,13 @@
-# 磯貝 茂樹 / Shigeki ISOGAI — 本番準備（未公開）
+# 磯貝 茂樹 / Shigeki ISOGAI — 承認済み公開候補
 
-予定repo: shigekiisogai/shigekiisogai.github.io（public）。remote未設定。site=https://shigekiisogai.github.io、base=/。
+本人2026-11-25承認：新しいpublic repo `shigekiisogai/shigekiisogai.github.io` で公開。site=https://shigekiisogai.github.io、base=/。repo作成・push・公開・実URL検収は親担当が行う。
 
-公開候補はWordPress既存14ページ＋Interactive Microeconomics（index＋7章）＋旧日本語slugの転送＋404。事例集はソース・ビルド・ナビに含めない。Teaching一覧は /courses/、Interactiveは /materials/interactive/ とし既存project Pagesの /teaching/ にファイルを置かない（推奨案、最終承認待ち）。
+Teachingは `/courses/` に担当授業と過去の授業名・歴史を保存し、Course Materialsへの案内を1行掲載。教材は `/course-materials/`、Interactiveは `/materials/interactive/`。公開本文8ページ＋Interactive（入口＋7章）の16 canonical、旧日本語slug転送4件と404。事例集は含めない。旧 `/teaching/` にファイルを生成しない。
 
-Node24: `npm ci --ignore-scripts` → `npm run check:publish` → `npm run build:github` → `npm run build:cloudflare` → `npm test` → `npm run check:links` → `npm run check:content`。
+六授業の原文ソースは保持し、ビルド・sitemap・ナビから除外。教材リンクは元の表示名・URLを維持してCourse Materialsに集約。本人指定の二Driveは公開物から除外。`provenance/materials-reconciliation.json` は元リンク全件の照合証跡。教材以外の授業案内等と本人確認事項は作業範囲のREPORT.md追記を参照。
 
-本文はsrc/content/pages/。元の公開本文を維持。講義ノート/PDFは元のDriveリンクのままでファイル移管ではない。check:contentは元本文のSHA256・基準テキスト・リンクを検査し、旧Interactiveリンク1件の配信時変換のみ明示する。未承認基準acceptはしない。
+Node24。親担当が `npm ci --ignore-scripts` を別途実行する。ローカル検証：`npm run build:github`、`npm run build:cloudflare`、`npm test`、`npm run check:links`、`npm run check:publish`、`npm run check:content`。外部URLへのアクセス検査とブラウザ検収は親担当。
 
-共通resource導線を本文外に追加。footerは旧移行試作表記と元ページリンクを現状維持。公開前には外部APPROVAL_SHEETを確認。main pushでActionsが配信するため承認前のrepo作成/push/Pages変更は禁止。docs/search-console.md参照。
+`check:content` は原本provenanceのSHA256・基準テキスト・リンクを維持して検証し、11/25承認差分を `provenance/approved-revision.json` と照合する。教材本文は原本＋明示した追記、Teachingは原本＋案内1行。元Interactiveリンクの配信時変換も維持する。基準のaccept操作は行わない。
+
+Search Consoleの本人操作は docs/search-console.md 参照。

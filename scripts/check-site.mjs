@@ -21,10 +21,10 @@ for(const dir of ['dist-github','dist-cloudflare']){
  }
  const sm=load(fs.readFileSync(dir+'/sitemap.xml','utf8'),{xml:true});
  assert.deepEqual(sm('loc').toArray().map(e=>sm(e).text()).sort(),canonical.sort());
- assert.equal(canonical.length,22);assert.equal(redirects,5);
+ assert.equal(canonical.length,16);assert.equal(redirects,4);
  const distance=new Map([['https://shigekiisogai.github.io/',0]]),queue=[...distance.keys()];
  for(const u of queue)for(const v of graph.get(u)||[])if(graph.has(v)&&!distance.has(v)){distance.set(v,distance.get(u)+1);queue.push(v);}
- assert.equal(distance.size,22,'Every public canonical must be reachable from Home');
+ assert.equal(distance.size,16,'Every public canonical must be reachable from Home');
  fs.mkdirSync('.local',{recursive:true});fs.writeFileSync(`.local/reachability-${dir}.json`,JSON.stringify(Object.fromEntries(distance),null,2));
  assert.match(fs.readFileSync(dir+'/robots.txt','utf8'),/Allow: \/\nSitemap: https:\/\/shigekiisogai.github.io\/sitemap.xml/);
  for(const file of ['index.html','ja/index.html']){
@@ -33,4 +33,4 @@ for(const dir of ['dist-github','dist-cloudflare']){
   assert.equal($('link[hreflang=ja]').attr('href'),'https://shigekiisogai.github.io/ja/');
  }
 }
-console.log('PASS: 28 HTML/build, 22 indexed canonicals, 5 noindex redirects + 404, original interactive scripts unchanged, excluded namespace and casebook absent');
+console.log('PASS: 21 HTML/build, 16 indexed canonicals, 4 noindex redirects + 404, original interactive scripts unchanged, excluded namespace and casebook absent');

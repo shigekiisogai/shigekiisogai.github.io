@@ -52,3 +52,5 @@ Advanced Microeconomics II (graduate)
 Advanced Micro Theory (graduate)  
 Applied Microeconomic Theory II (graduate)  
 Theory of Industrial Organization (graduate)
+
+<a href="/course-materials/">Course Materials / 講義資料</a>

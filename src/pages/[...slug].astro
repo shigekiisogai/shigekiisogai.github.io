@@ -1,11 +1,12 @@
 ---
+import routes from '../lib/routes.json';
 import Layout from '../layouts/Layout.astro';
 import {renderContent} from '../lib/render.mjs';
 import redirects from '../lib/redirects.json';
 import {withBase} from '../lib/paths.mjs';
 export async function getStaticPaths(){
  const pages=import.meta.glob('../content/pages/*.md',{eager:true});
- const entries=Object.values(pages).map((page:any)=>({params:{slug:page.frontmatter.route.replace(/^\//,'').replace(/\/$/,'')||undefined},props:{page}}));
+ const entries=Object.values(pages).filter((page:any)=>routes.some(r=>r.route===page.frontmatter.route)).map((page:any)=>({params:{slug:page.frontmatter.route.replace(/^\//,'').replace(/\/$/,'')||undefined},props:{page}}));
  return [...entries,...Object.entries(redirects).map(([from,to])=>({params:{slug:from.slice(1,-1)},props:{redirect:to}}))];
 }
 const {page,redirect}=Astro.props;
