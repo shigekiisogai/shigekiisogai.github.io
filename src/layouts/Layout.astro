@@ -4,7 +4,7 @@ import {siteHeader,navigationItems as menu} from '../lib/navigation.mjs';
 import {withBase} from '../lib/paths.mjs';
 import routes from '../lib/routes.json';
 const resourcePages=routes.filter(p=>!['home','research','teaching','course-materials','japanese'].includes(p.id));
-const {title, lang='en',route='/',source,scriptsAllowed=false}=Astro.props;
+const {title, lang='en',route='/',scriptsAllowed=false}=Astro.props;
 const base=import.meta.env.BASE_URL;
 const is404=route==='/404.html';
 const canonical=new URL(route,Astro.site).href;
@@ -44,7 +44,7 @@ const description=route==='/'?'Shigeki ISOGAI / 磯貝 茂樹, Associate Profess
    </main>
    <footer class="site-footer">
     <nav aria-label="Footer navigation"><ul>{menu.map(p=><li><a href={withBase(p.route,base)}>{p.label}</a></li>)}</ul></nav>
-    <p><a href={withBase('/',base)}>Shigeki ISOGAI</a> <span aria-hidden="true">/</span> <span>Migration preview / 移行試作</span>{source&&<> <span aria-hidden="true">/</span> <a href={source}>Original page / 元ページ</a></>}</p>
+    <p><a href={withBase('/',base)}>Shigeki ISOGAI</a></p>
    </footer>
   </div>
  </body>

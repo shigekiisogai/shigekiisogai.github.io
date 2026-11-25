@@ -13,8 +13,11 @@ for(const [name,hash] of Object.entries(baseline)){
   original=revision.originalMaterialsBody;
  }
  if(name==='teaching'){
+  const addition='## 2026 Fall\n\nMicroeconomics (Graduate School)  \nResearch Seminar I  \nThesis Seminar II  \n（甲南大学）現代アメリカ経済\n\n';
+  assert.ok(body.startsWith('\n\n'+addition));
+  original=body.replace('\n\n'+addition,'\n\n');
   const suffix='\n<a href="/course-materials/">Course Materials / 講義資料</a>\n';
-  assert.ok(body.endsWith(suffix));original=body.slice(0,-suffix.length);
+  assert.ok(original.endsWith(suffix));original=original.slice(0,-suffix.length);
  }
  assert.equal(createHash('sha256').update(original).digest('hex'),hash,name+' original provenance changed');
 }

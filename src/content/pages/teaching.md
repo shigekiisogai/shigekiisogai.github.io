@@ -5,6 +5,13 @@ source: "https://shigekiisogai.wordpress.com/teaching/"
 lang: "en"
 ---
 
+## 2026 Fall
+
+Microeconomics (Graduate School)  
+Research Seminar I  
+Thesis Seminar II  
+（甲南大学）現代アメリカ経済
+
 ## 2026 Spring
 
 Microeconomics I  
