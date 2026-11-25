@@ -13,7 +13,7 @@ for(const [name,hash] of Object.entries(baseline)){
   original=revision.originalMaterialsBody;
  }
  if(name==='teaching'){
-  const addition='## 2026 Fall\n\nMicroeconomics (Graduate School)  \nResearch Seminar I  \nThesis Seminar II  \n（甲南大学）現代アメリカ経済\n\n';
+  const addition='## 2026 Fall\n\nMicroeconomics (Graduate School)  \nResearch Seminar I  \nThesis Seminar II  \n（甲南大学）現代アメリカ経済\n\n## 2026 Summer\n\n（東京都立大学）経済経営特別講義（Microeconomics）（英語講義）\n\n';
   assert.ok(body.startsWith('\n\n'+addition));
   original=body.replace('\n\n'+addition,'\n\n');
   const suffix='\n<a href="/course-materials/">Course Materials / 講義資料</a>\n';

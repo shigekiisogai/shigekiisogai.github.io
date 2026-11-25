@@ -47,7 +47,7 @@ for(const dir of ['dist-github','dist-cloudflare']){
  assert.deepEqual(teaching('.entry-content a').toArray().map(a=>teaching(a).attr('href')),['/course-materials/']);
  assert.equal(teaching('.resource-links,.course-directory').length,0,'Teaching resource links');
  const old=baseline.find(p=>p.id==='teaching').text;
- assert.equal(teaching('.entry-content').text().replace(/\s+/gu,''),'2026FallMicroeconomics(GraduateSchool)ResearchSeminarIThesisSeminarII（甲南大学）現代アメリカ経済'+old+'CourseMaterials/講義資料','Teaching course names and history preserved');
+ assert.equal(teaching('.entry-content').text().replace(/\s+/gu,''),'2026FallMicroeconomics(GraduateSchool)ResearchSeminarIThesisSeminarII（甲南大学）現代アメリカ経済2026Summer（東京都立大学）経済経営特別講義（Microeconomics）（英語講義）'+old+'CourseMaterials/講義資料','Teaching course names and history preserved');
  const japanese=load(fs.readFileSync(dir+'/ja/index.html','utf8'));
  assert(!japanese('a').toArray().some(a=>revision.excludedCourses.some(id=>japanese(a).attr('href')?.includes(id))));
 }

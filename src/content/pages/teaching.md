@@ -12,6 +12,10 @@ Research Seminar I
 Thesis Seminar II  
 （甲南大学）現代アメリカ経済
 
+## 2026 Summer
+
+（東京都立大学）経済経営特別講義（Microeconomics）（英語講義）
+
 ## 2026 Spring
 
 Microeconomics I  
